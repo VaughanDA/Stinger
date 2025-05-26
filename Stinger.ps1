@@ -16,106 +16,76 @@ $VerbosePreference = "Continue"
 $InformationPreference = "Continue"
 $ErrorActionPreference = "Stop"
 
+# Stinger.ps1
+# PowerShell script with functions declared before the main execution block.
+# Verbose messages now include timestamps.
+
+#region Helper Functions
+
+function Write-VerboseTimestamp {
+    param (
+        [Parameter(Mandatory)]
+        [string]$Message
+    )
+
+    $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+    Write-Verbose "[$timestamp] $Message"
+}
+
+#endregion
+
+#region Function Definitions
+
+function Initialize-Stinger {
+    [CmdletBinding()]
+    param()
+
+    Write-VerboseTimestamp "Initializing Stinger environment..."
+    # Initialization logic here
+    Start-Sleep -Seconds 1  # Simulate work
+    Write-VerboseTimestamp "Initialization complete."
+}
+
+function Process-Stinger {
+    [CmdletBinding()]
+    param()
+
+    Write-VerboseTimestamp "Starting Stinger processing..."
+    # Processing logic here
+    Start-Sleep -Seconds 2  # Simulate work
+    Write-VerboseTimestamp "Processing complete."
+}
+
+function Notify-Stinger {
+    [CmdletBinding()]
+    param()
+
+    Write-VerboseTimestamp "Sending Stinger notification..."
+    # Notification logic here
+    Start-Sleep -Seconds 1  # Simulate work
+    Write-VerboseTimestamp "Notification sent."
+}
+
+#endregion
+
+#region Main Module
+
 try {
-    Write-Verbose "Starting Stinger main module..."
+    Write-VerboseTimestamp "Stinger main module started."
 
-    function Initialize-StingerEnvironment {
-        <#
-        .SYNOPSIS
-            Sets up the necessary environment for the Stinger process.
+    Initialize-Stinger
+    Process-Stinger
+    Notify-Stinger
 
-        .DESCRIPTION
-            Loads configuration settings, initializes paths, and validates prerequisites.
-        #>
-        Write-Verbose "Entering Initialize-StingerEnvironment"
-
-        try {
-            # Placeholder: Initialize configuration, directories, or services
-            Write-Verbose "Environment initialization successful."
-            return $true
-        }
-        catch {
-            Write-Error "Initialization failed: $_"
-            throw $_
-        }
-        finally {
-            Write-Verbose "Exiting Initialize-StingerEnvironment"
-        }
-    }
-
-    function Invoke-StingerProcessing {
-        <#
-        .SYNOPSIS
-            Executes the core logic of the Stinger operation.
-
-        .DESCRIPTION
-            Performs the primary workload defined by the business requirements.
-        #>
-        Write-Verbose "Entering Invoke-StingerProcessing"
-
-        try {
-            # Placeholder: Insert business logic or operations
-            Write-Verbose "Processing complete."
-            return $true
-        }
-        catch {
-            Write-Error "Processing failed: $_"
-            throw $_
-        }
-        finally {
-            Write-Verbose "Exiting Invoke-StingerProcessing"
-        }
-    }
-
-    function Send-StingerNotification {
-        <#
-        .SYNOPSIS
-            Sends notification or logs post-execution summary.
-
-        .DESCRIPTION
-            Can be extended to send email, write to logs, or alert dashboards.
-        #>
-        Write-Verbose "Entering Send-StingerNotification"
-
-        try {
-            # Placeholder: Notification logic, e.g., Send-MailMessage or Write-EventLog
-            Write-Verbose "Notification sent or logged successfully."
-            return $true
-        }
-        catch {
-            Write-Warning "Notification process encountered an issue: $_"
-            throw $_
-        }
-        finally {
-            Write-Verbose "Exiting Send-StingerNotification"
-        }
-    }
-
-    # === Main Script Execution Sequence ===
-
-    if (-not (Initialize-StingerEnvironment)) {
-        throw "Failed to initialize environment."
-    }
-
-    if (-not (Invoke-StingerProcessing)) {
-        throw "Processing did not complete successfully."
-    }
-
-    if (-not (Send-StingerNotification)) {
-        Write-Warning "Notification was not sent successfully."
-    }
-
+    Write-VerboseTimestamp "Stinger main module completed successfully."
 }
 catch {
-    Write-Error "Stinger encountered a fatal error: $_"
+    Write-Error "An error occurred in the Stinger script: $_"
     throw
 }
 finally {
-    Write-Verbose "Disposing of Stinger session..."
-    function DISPOSE {
-        Write-Verbose "Cleaning up resources..."
-        # Placeholder for any resource cleanup
-    }
-    DISPOSE
-    Write-Verbose "Stinger module complete."
+    Write-VerboseTimestamp "Cleaning up resources if needed."
+    # Cleanup logic here if required
 }
+
+#endregion
